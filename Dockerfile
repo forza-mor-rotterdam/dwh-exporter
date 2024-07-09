@@ -2,7 +2,7 @@ FROM debian:trixie
 
 RUN apt update \
  && apt upgrade -y \
- && apt install -y postgresql-client-16 openssh-client
+ && apt install -y postgresql-client-16 openssh-client nano
 
 COPY export.sh /export.sh
 
