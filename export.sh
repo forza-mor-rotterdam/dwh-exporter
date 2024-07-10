@@ -3,6 +3,11 @@
 set -x
 set -e
 
+echo "Load known hosts file"
+mkdir -p /root/.ssh
+echo $DWH_KNOWN_HOSTS > /root/.ssh/known_hosts
+chown -R u=rw,g=,o= /root/.ssh
+
 echo "Start SSH agent"
 eval `ssh-agent`
 echo "SSH agented started with PID: $SSH_AGENT_PID"
@@ -18,6 +23,6 @@ do
     psql -c "\\copy (select * from $table) to '/tmp/$table.csv' csv header"
     ls -larth /tmp/$table.csv
 
-    scp /tmp/$table.csv $DWH_USERNAME@$DWH_HOSTNAME:/$table.csv
+    scp /tmp/$table.csv $DWH_USERNAME@$DWH_HOSTNAME:/$DWH_PREFIX.$table.csv
 done
 
