@@ -6,7 +6,7 @@ set -e
 echo "Load known hosts file"
 mkdir -p /root/.ssh
 echo $DWH_KNOWN_HOSTS > /root/.ssh/known_hosts
-chown -R u=rw,g=,o= /root/.ssh
+chmod -R u=rw,g=,o= /root/.ssh
 
 echo "Start SSH agent"
 eval `ssh-agent`
