@@ -5,6 +5,7 @@ set -e
 
 echo "Start SSH agent"
 eval `ssh-agent`
+echo "SSH agented started with PID: $SSH_AGENT_PID"
 
 echo "Add key to agent"
 ssh-add - <<< $DWH_SFTP_PRIVATE_KEY
