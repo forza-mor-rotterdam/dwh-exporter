@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -x
+#set -x
 set -e
 
 echo "Load known hosts file"
@@ -14,15 +14,17 @@ echo "SSH agented started with PID: $SSH_AGENT_PID"
 
 echo "Add key to agent"
 ssh-add - <<< $DWH_SFTP_PRIVATE_KEY
+ssh-add -L
 
-echo "Started with table list: $DWH_TABLES"
+echo "Started with table list: $TABLES"
 
-for table in $DWH_TABLES
+for table in $TABLES
 do
     echo "Export table: $table"
     psql -c "\\copy (select * from $table) to '/tmp/$table.csv' csv header"
     ls -larth /tmp/$table.csv
 
-    scp /tmp/$table.csv $DWH_USERNAME@$DWH_HOSTNAME:/$DWH_PREFIX.$table.csv
+    scp /tmp/$table.csv $DWH_USERNAME@$DWH_HOSTNAME:$DWH_LOCATION/$DWH_PREFIX$table.csv
+    rm /tmp/$table.csv
 done
 
