@@ -8,4 +8,4 @@ COPY export.sh /export.sh
 
 RUN chmod ugo+x /export.sh
 
-ENTRYPOINT ["export.sh"]
+ENTRYPOINT ["/export.sh"]
